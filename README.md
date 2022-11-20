@@ -15,6 +15,7 @@ This idea is the core of the Edinburgh Logical Framework (ELF).
 # Propositional logic
 
 ### Syntax
+
 $$
  e \ ::= \ \neg e \ | \  e \Rightarrow e \ | \ e \wedge e 
 $$
@@ -31,11 +32,75 @@ data Formula : Type where
 
 ### Set of proofs 
 
-We define that the set of proofs of a formula   $T(\varphi) =$  { proof  | proof of $\varphi$ } is inductively defined by judgments. 
+We define that the set of proofs of a formula   $T(\phi) =$  { proof  | proof of $\phi$ } is inductively defined by judgments. 
 
-$\varphi$  
-▁ ( $ident$ )  
-$\varphi$  
+In idris:
+```idris
+data T : Formula -> Type where
+ -- The constructors of this inductive dependent type are the judgments of natural deduction  
+```
+Note that $t$ is a proof of $\phi$ if $t \in T(\phi)$ or, using Curry-Howard and Idris notation, if t : T ϕ
+
+Lets define the judgments as constructors of the type T  
+$\phi$  
+▁ ( $Ident$ )  
+$\phi$  
+```idris
+  Ident : T ϕ -> T ϕ
+```
+
+------------
+
+  [ $\phi$ ]                          
+    ⋮  
+  $\psi$                            
+  ───    ( $ImpI$ )  
+  $\phi \Rightarrow \psi$
+ 
+ 
+ 
+ &nbsp;
+ 
+ 
+  $\phi \Rightarrow \psi \ \ \ \ \ \ \phi $                                   
+  ────── ( $ImpE$ )  
+  $\psi$ 
+
+
+```idris
+  ImpI : (T ϕ -> T Ψ) -> T (ϕ `Imp` Ψ)
+  
+  ImpE : T (ϕ `Imp` Ψ) -> T ϕ -> T Ψ
+```
+
+------------
+ 
+  $\phi \ \ \ \ \ \ \psi $                                   
+  ──── ( $AndI$ )  
+  $\phi \wedge \psi$ 
+  
+  &nbsp;
+  
+  
+  $\phi \wedge \psi $                                   
+  ──── ( $AndE1$ )  
+  $\phi$ 
+  
+ &nbsp;
+  
+  
+  $\phi \wedge \psi $                                   
+  ──── ( $AndE1$ )  
+  $\psi$ 
+  
+
+```idris
+  AndI : T ϕ -> T Ψ -> T (ϕ `And` Ψ)
+      
+  AndE1 : T (ϕ `And` Ψ) -> T ϕ
+       
+  AndE2 : T (ϕ `And` Ψ) -> T Ψ
+```
 
 # First order logic
 

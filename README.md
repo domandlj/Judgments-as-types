@@ -16,6 +16,7 @@ Perhaps later i add Hoare logic.
 
 ## Translations
 Here's a refreshers of the CH correspondence, i will use Idris, but Agda is really alike.
+
 | **Intuitionistic logic**   | **Type theory**         | **Idris**       | **Agda**         |
 |----------------------------|-------------------------|-----------------|------------------|
 | $\top$                     | $1$                     | `()`            | `⊤`              |
@@ -26,7 +27,8 @@ Here's a refreshers of the CH correspondence, i will use Idris, but Agda is real
 | $\phi \vee \psi$           | $\phi + \psi$           | `Either ϕ Ψ`    | `Either ϕ Ψ`     |
 | $\forall x\in\phi.\psi(x)$ | $\Pi x:\phi. \psi(x)$   | `(x:ϕ) -> Ψ x`  | `(x:ϕ) → Ψ x`    |
 | $\exists x\in\phi.\psi(x)$ | $\Sigma x:\phi.\psi(x)$ | `(x:ϕ ** Ψ x)`  | `Σ ϕ (λx → Ψ x)` |
-| $=$                        | $=$                     | ` = `           | `≡`              |
+| $=$                        | $=$                     | ` = `           | `≡`              | 
+
 
 # Propositional (classical) logic 
 
@@ -80,7 +82,7 @@ $\phi$
  &nbsp;
  
  
-  $\phi \Rightarrow \psi \ \ \ \ \ \ \phi $                                   
+  $\phi \Rightarrow \psi \ \ \ \ \ \ \phi$                                   
   ────── ( $ImpE$ )  
   $\psi$ 
 
@@ -93,22 +95,22 @@ $\phi$
 
 ------------
  
-  $\phi \ \ \ \ \ \ \psi $                                   
+  $\phi \ \ \ \ \ \ \psi$                                   
   ──── ( $AndI$ )  
   $\phi \wedge \psi$ 
   
   &nbsp;
   
   
-  $\phi \wedge \psi $                                   
+  $\phi \wedge \psi$                                   
   ──── ( $AndE1$ )  
   $\phi$ 
   
  &nbsp;
   
   
-  $\phi \wedge \psi $                                   
-  ──── ( $AndE1$ )  
+  $\phi \wedge \psi$                                   
+  ──── ( $AndE2$ )  
   $\psi$ 
   
 
@@ -122,7 +124,7 @@ $\phi$
 
 -----------
 
-   $\[\phi\] \ \ \ \ \ \ \[\phi\]$                           
+   $[\phi] \ \ \ \  [\phi]$                           
     $⋮            \ \ \ \ \ \ \ \ \ \      ⋮$  
   $\psi  \ \ \ \ \ \ \ \neg \psi$                            
   ────    ( $NegI$ )  
@@ -193,7 +195,7 @@ Suppose in a formula $\phi$ of the object language (FOL in this case) we want to
 
 ### Syntax
 $e \ ::= t \ | \ \neg e \ | \  e \Rightarrow e \ | \ e \wedge e \ | \ \forall v . e \ | \ \exists v . e  | \ \epsilon v . e$  
-$t \ ::= v \ | \  t = t \$  
+$t \ ::= v \ | \  t = t$  
 $v \ ::= x, y, z, ...$
 
 We are using a not so common presentation of FOL with $\epsilon$ the Hilbert Choice operator, we can think of this operator in this way:
@@ -298,7 +300,7 @@ data T : Formula -> Type where
  $\ \ \phi \ t$
  
  ─────   ( $ExistsI$ )  
-  $\ \ \ \exists x . \phi $
+  $\ \ \ \exists x . \phi$
 
 ```idris
   ExistsE : {ϕ : Index -> Formula} -> {Ψ : Formula}  -> T (Exists ϕ) -> (T (Exists ϕ) -> T Ψ) -> T Ψ
@@ -310,14 +312,14 @@ data T : Formula -> Type where
  $\ \forall x. \phi$
  
  ─────   ( $ForallE$ )  
-  $\ \phi \ t $
+  $\ \phi \ t$
   
    &nbsp;
    
  $\ \ \phi \ t$
  
  ─────   ( $ForallI$ )  
-  $\ \ \ \forall x . \phi $
+  $\ \ \ \forall x . \phi$
 
 ```idris
   ForallE : {ϕ : Index -> Formula} -> {t : Index} -> T (Forall ϕ) -> T (ϕ t)
@@ -376,9 +378,9 @@ Doing this in Agda is also capable but you would have to interface it with Haske
 
 
 # Code
-See the repo files `pl.idr` and `fol.idr`, they typecheck. 
+See the [repo](https://github.com/domandlj/Judgments-as-types) files `pl.idr` and `fol.idr`, they typecheck. 
 
-# 
+ 
 
 # Bibliography
 - Avron, Arnon & Honsell, Furio & Mason, Ian. (1996). An Overview of the Edinburgh Logical Framework. 10.1007/978-1-4612-3658-0_8. 

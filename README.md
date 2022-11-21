@@ -1,5 +1,4 @@
 # Implementing formal systems in Idris
-Using dependent types as a metalanguage with Idris2.
 
 You can use a dependently typed language like Idris, Agda, Coq (gallina?), etc. as a metalangue for reasoning about 
 formal systems (propositional logic, FOL, hoare logic, simply typed lambda calculus, etc.) encoding the judgments in types.  

@@ -16,6 +16,7 @@ Perhaps later i add Hoare logic.
 | judgment (inference rule) | type            | _judgments-as-types_     |
 
 ## Translations
+Here's a refreshers of the CH correspondence, i will use Idris, but Agda is really alike.
 | **Intuitionistic logic**   | **Type theory**         | **Idris**       | **Agda**         |
 |----------------------------|-------------------------|-----------------|------------------|
 | $\top$                     | $1$                     | `()`            | `⊤`              |
@@ -24,8 +25,8 @@ Perhaps later i add Hoare logic.
 | $\neg \phi$                | $\phi \rightarrow 0$    | `ϕ -> Void`     | `ϕ → ⊥`          |
 | $\phi \wedge \psi$         | $\phi \times \psi$      | `(ϕ , Ψ)`       | `ϕ × Ψ`          |
 | $\phi \vee \psi$           | $\phi + \psi$           | `Either ϕ Ψ`    | `Either ϕ Ψ`     |
-| $\forall x\in\phi.\psi(x)$ | $\Pi x:\phi. \psi(x)$   | `(x:ϕ) -> Ψ x`  | `(x : ϕ) → Ψ x`  |
-| $\exists x\in\phi.\psi(x)$ | $\Sigma x:\phi.\psi(x)$ | `( x:ϕ ** Ψ x)` | `Σ ϕ (λx → Ψ x)` |
+| $\forall x\in\phi.\psi(x)$ | $\Pi x:\phi. \psi(x)$   | `(x:ϕ) -> Ψ x`  | `(x:ϕ) → Ψ x`    |
+| $\exists x\in\phi.\psi(x)$ | $\Sigma x:\phi.\psi(x)$ | `(x:ϕ ** Ψ x)`  | `Σ ϕ (λx → Ψ x)` |
 | $=$                        | $=$                     | ` = `           | `≡`              |
 
 # Propositional (classical) logic 
@@ -365,10 +366,20 @@ proof2 f = (x ** (f y))
 
 
 
+# Whats the point of this? Should i use Agda or Idris?
+Implementing a formal system this way is really fast, specially because we don't have to mechanize all the machinery needed for handling binders. We just let the underlying metalanguage (Idris, Agda, whatever) take care of it so we don't worry.  
+  
+I've used Idris here because i've learned it first, is really easy if you know Haskell already. Both are awesome languages, and really alike.  
+I would say that using Agda as a theorem prover is better, also it has mixfix operators so defining the abstract syntax of formal systems is better and leads to more readable code.  
 
-### Code
+The adventage of Idris is that it has more general programming capabilities, it's just like a dependently typed Haskell. Imagine you want to make a theorem prover of FOL using this approach, even you want it with a GUI and a DSL : you can use a library of parser combinators and and some GUI library for this. You can even then transpile it to Javascript.  
+Doing this in Agda is also capable but you would have to interface it with Haskell for using their libraries.  
+
+
+# Code
 See the repo files `pl.idr` and `fol.idr`, they typecheck. 
 
+# 
 
 # Bibliography
 - Avron, Arnon & Honsell, Furio & Mason, Ian. (1996). An Overview of the Edinburgh Logical Framework. 10.1007/978-1-4612-3658-0_8. 

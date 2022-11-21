@@ -45,7 +45,7 @@ data T : Formula -> Type where
   NegI : (T phi -> T psi) -> (T phi -> T (Neg psi)) -> T (Neg psi)  
   NegE : T (Neg $ Neg psi) -> T psi
 
-  Equal0 : T (x `Equal` x) 
+  Equal0 : {x : Index} -> T (x `Equal` x) 
   Equal1 : {term : Index-> Index} -> T (x `Equal` y) -> T ((term x) `Equal` (term y))
   Equal2 : {phi : Index -> Formula} -> T (x `Equal` y) -> T (phi x) -> T (phi y)
   
@@ -62,7 +62,10 @@ data T : Formula -> Type where
 
 --  ∀x.Φ ⊢ ∃x.Φ
 lemma : {phi : Index -> Formula} -> T (Forall phi) -> T (Exists phi)
-lemma p = ExistsI $ ForallE {phi} {t = (Choice phi)} p
+lemma p = ExistsI $ ForallE {phi} {t} p
+  where
+    t : Index
+    t = Choice phi
 
 --  ∀x.Φ → ∃x.Φ
 proofFOL : {phi : Index -> Formula} -> T ((Forall phi) `Imp` (Exists phi))
@@ -83,5 +86,18 @@ proof3 : T ((P `And` Q) `Imp` Q)
 proof3 = ImpI AndE2
 
 -- ∀ x . x = x
-example : Formula
-example = Forall (\x : Index => x `Equal` x)
+proof4 : T ( Forall (\x : Index => x `Equal` x) )
+proof4 = ForallI (Equal0 {x})
+  where x : Index
+
+
+ --  ∀x.Φ → ∃x.Φ
+foo1 : {x : Type} -> {P : Type -> Type} -> ( (x) -> P x ) -> (x ** P x)
+foo1 f = (x ** (f y))
+  where y : x
+        
+-- ∀ x . x = x 
+foo : (x: Type) -> x = x
+foo x = Refl
+
+

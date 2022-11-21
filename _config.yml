@@ -7,7 +7,6 @@ highlighter: rouge
 gist:
   noscript: false
  
-highlighter: rouge
 markdown: kramdown
 kramdown:
   math_engine: katex

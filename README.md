@@ -15,6 +15,19 @@ Perhaps later i add Hoare logic.
 | proof                     | term            | _proofs-as-programs_     |
 | judgment (inference rule) | type            | _judgments-as-types_     |
 
+## Translations
+| **Intuitionistic logic**   | **Type theory**         | **Idris**       | **Agda**         |
+|----------------------------|-------------------------|-----------------|------------------|
+| $\top$                     | $1$                     | `()`            | `⊤`              |
+| $\bot$                     | $0$                     | `Void`          | `⊥`              |
+| $\phi \Rightarrow \psi$    | $\phi \rightarrow \psi$ | `ϕ -> Ψ`        | `ϕ → Ψ`          |
+| $\neg \phi$                | $\phi \rightarrow 0$    | `ϕ -> Void`     | `ϕ → ⊥`          |
+| $\phi \wedge \psi$         | $\phi \times \psi$      | `(ϕ , Ψ)`       | `ϕ × Ψ`          |
+| $\phi \vee \psi$           | $\phi + \psi$           | `Either ϕ Ψ`    | `Either ϕ Ψ`     |
+| $\forall x\in\phi.\psi(x)$ | $\Pi x:\phi. \psi(x)$   | `(x:ϕ) -> Ψ x`  | `(x : ϕ) → Ψ x`  |
+| $\exists x\in\phi.\psi(x)$ | $\Sigma x:\phi.\psi(x)$ | `( x:ϕ ** Ψ x)` | `Σ ϕ (λx → Ψ x)` |
+| $=$                        | $=$                     | ` = `           | `≡`              |
+
 # Propositional (classical) logic 
 
 ### Syntax
@@ -32,6 +45,8 @@ data Formula : Type where
   And : Formula -> Formula -> Formula
 
 ```
+
+
 
 ### Set of proofs 
 

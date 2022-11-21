@@ -270,7 +270,7 @@ data T : Formula -> Type where
 
 ------
 
-   $\ \ \ \ \ \ \ \ \ \ \ [\exists . \phi]$  
+   $\ \ \ \ \ \ \ \ \ \ \ [\exists x . \phi]$  
     $\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ ⋮$  
   $\exists x. \phi \ \ \ \ \ \ \ \psi$  
   ─────   ( $ExistsE$ )  

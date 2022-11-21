@@ -233,6 +233,50 @@ data T : Formula -> Type where
  -- The constructors of this type are all of the propositional logic case and the following new ones
 ```
 
+                                   
+  ── ( $Equal0$ )  
+  $x=x$ 
+  
+  &nbsp;
+    
+   $x=y$  
+   ──── ( $Equal1$ )  
+  $t(x)=t(y)$ 
+  
+   &nbsp;
+    
+   $x=y \ \ \ \ \phi(x)$  
+   ───── ( $Equal2$ )  
+  $\phi(y)$
+
+```idris
+  Equal0 : {x : Index} -> T (x `Equal` x) 
+  Equal1 : {t : Index-> Index} -> T (x `Equal` y) -> T ((t x) `Equal` (t y))
+  Equal2 : {ϕ : Index -> Formula} -> T (x `Equal` y) -> T (ϕ x) -> T (ϕ y)
+```
+------
+
+ $\exists x . \phi$  
+   ──── ( $ChoiceI$ )  
+  $\phi (\epsilon \phi)$ 
+
+```idris
+  ChoiceI : {ϕ : Index -> Formula} -> T (Exists ϕ) -> T (ϕ (Choice ϕ))  
+```
+
+
+------
+```idris
+  ExistsE : {ϕ : Index -> Formula} -> {Ψ : Formula}  -> T (Exists ϕ) -> (T (Exists ϕ) -> T Ψ) -> T Ψ
+  ExistsI : {ϕ : Index -> Formula} -> {t : Index} -> T (ϕ t) -> T (Exists ϕ)   
+```
+
+------
+```idris
+  ForallE : {ϕ : Index -> Formula} -> {t : Index} -> T (Forall ϕ) -> T (ϕ t)
+  ForallI : {ϕ : Index -> Formula} -> {t : Index} -> T (ϕ t) -> T (Forall ϕ)
+```
+
 ### Proofs examples
 
 # Cheat sheet

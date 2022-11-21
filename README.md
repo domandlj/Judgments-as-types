@@ -9,10 +9,10 @@ This idea is the core of the Edinburgh Logical Framework (ELF).
 | **Formal system**         | **Type theory** | **Marketing name**       |
 |---------------------------|-----------------|--------------------------|
 | theorem (formula)         | type            | _propositions-as-types_  |
-| proof                     | term            | _proofs-as-types_        |
-| judgment (inference rule) | type            | _judgments-as-types_      |
+| proof                     | term            | _proofs-as-programs_     |
+| judgment (inference rule) | type            | _judgments-as-types_     |
 
-# Propositional logic
+# Propositional (classical) logic 
 
 ### Syntax
 
@@ -102,6 +102,27 @@ $\phi$
   AndE2 : T (ϕ `And` Ψ) -> T Ψ
 ```
 
+-----------
+
+   $\[\phi\] \ \ \ \ \ \ \[\phi\]$                           
+    $⋮            \ \ \ \ \ \ \ \ \ \      ⋮$  
+  $\psi  \ \ \ \ \ \ \ \neg \psi$                            
+  ────    ( $NegI$ )  
+  $\neg \phi$
+  
+ &nbsp;
+ 
+ $\neg \neg \phi$                            
+ ──    ( $NegI$ )  
+ $\phi$
+
+
+
+```idris
+  NegI : (T ϕ -> T Ψ) -> (T ϕ -> T (Neg Ψ)) -> T (Neg ϕ)  
+  NegE : T (Neg $ Neg ϕ) -> T ϕ
+```
+
 ### Proofs examples
 Lets prove $(P \Rightarrow P)$, $(P \wedge Q \Rightarrow P)$ and $(P \wedge Q \Rightarrow Q)$
 ```idris
@@ -123,7 +144,7 @@ For better understanding draw the natural deduction proof tree, the judgments na
 what you see in the terms (proofs) `proof1`, `proof2` and `proof3`. 
 &nbsp;
 
-Notice something, we are proving using dependant type theory as a metalanguage (propositional logic is the object language).  
+Notice something, we are proving using dependent type theory as a metalanguage (propositional classical logic is the object language).  
 It's not the same as proving using directly Curry-Howard. This would be the proofs using just Curry-Howard, notice the difference.
 
 ```idris
@@ -138,6 +159,7 @@ proof3 (a, b) = b
 
 
 ```
+The types here corresponds to formulas of an intuisionistic higer order logic. 
 
 # First order logic
 

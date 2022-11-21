@@ -269,12 +269,41 @@ data T : Formula -> Type where
 
 
 ------
+
+   $\ \ \ \ \ \ \ \ \ \ \ [\exists . \phi]$  
+    $\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ ⋮$  
+  $\exists x. \phi \ \ \ \ \ \ \ \psi$  
+  ─────   ( $ExistsE$ )  
+  $\ \ \ \psi$
+ 
+ 
+ 
+ &nbsp;
+ 
+ $\ \ \phi \ t$
+ 
+ ─────   ( $ExistsI$ )  
+  $\ \ \ \exists x . \phi $
+
 ```idris
   ExistsE : {ϕ : Index -> Formula} -> {Ψ : Formula}  -> T (Exists ϕ) -> (T (Exists ϕ) -> T Ψ) -> T Ψ
   ExistsI : {ϕ : Index -> Formula} -> {t : Index} -> T (ϕ t) -> T (Exists ϕ)   
 ```
 
 ------
+
+ $\ \forall x. \phi$
+ 
+ ─────   ( $ForallE$ )  
+  $\ \phi \ t $
+  
+   &nbsp;
+   
+ $\ \ \phi \ t$
+ 
+ ─────   ( $ForallI$ )  
+  $\ \ \ \forall x . \phi $
+
 ```idris
   ForallE : {ϕ : Index -> Formula} -> {t : Index} -> T (Forall ϕ) -> T (ϕ t)
   ForallI : {ϕ : Index -> Formula} -> {t : Index} -> T (ϕ t) -> T (Forall ϕ)

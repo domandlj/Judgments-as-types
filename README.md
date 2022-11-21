@@ -1,9 +1,12 @@
-# Judgments-as-types
+# Implementing formal systems in Idris2
 Using dependent types as a metalanguage with Idris2.
 
 You can use a dependently typed language like Idris, Agda, Coq (gallina?), etc. as a metalangue for reasoning about 
-formal systems (propositional logic, FOL, hoare logic, simply typed lambda calculus, etc.).  
-This idea is the core of the Edinburgh Logical Framework (ELF).
+formal systems (propositional logic, FOL, hoare logic, simply typed lambda calculus, etc.) encoding the judgments in types.  
+This idea is the core of the Edinburgh Logical Framework (ELF). 
+
+I will show how to implement classical propositional logic and first order logic, with a fast, easy and painless way to handle binders.  
+Perhaps later i add Hoare logic.
 
 ## Curry-Howard 
 | **Formal system**         | **Type theory** | **Marketing name**       |
@@ -279,11 +282,8 @@ data T : Formula -> Type where
 
 ### Proofs examples
 
-# Cheat sheet
-This is in spanish, so if you can't read it just learn spanish 👍  
-![alt text](Parte0.jpeg)
-![alt text](Parte1.jpeg)
-
+### Code
+See the repo files `pl.idr` and `fol.idr`, they typecheck. 
 
 
 # Bibliography

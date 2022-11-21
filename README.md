@@ -123,7 +123,7 @@ $\phi$
   NegE : T (Neg $ Neg ϕ) -> T ϕ
 ```
 
-The (NegE) is equivalent to the law of excluded middle, which in intuitionistic logic is illegal. The (NegI) is proof of negation which is legal in intuitionistic logic [see]((http://math.andrej.com/2010/03/29/proof-of-negation-and-proof-by-contradiction/).
+The (NegE) is equivalent to the law of excluded middle, which in intuitionistic logic is illegal. The (NegI) is proof of negation which is legal in intuitionistic logic. [See](http://math.andrej.com/2010/03/29/proof-of-negation-and-proof-by-contradiction/).
 
 ### Proofs examples
 Lets prove $(P \Rightarrow P)$, $(P \wedge Q \Rightarrow P)$ and $(P \wedge Q \Rightarrow Q)$

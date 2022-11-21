@@ -28,7 +28,7 @@ data T : Formula -> Type where
   AndE1 : T (p `And` q) -> T p
   AndE2 : T (p `And` q) -> T q
 
-  NegI : (T p -> T q) -> (T p -> T (Neg q)) -> T (Neg q)  
+  NegI : (T p -> T q) -> (T p -> T (Neg q)) -> T (Neg p)  
   NegE : T (Neg $ Neg p) -> T p
 
 

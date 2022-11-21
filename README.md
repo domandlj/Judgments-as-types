@@ -1,4 +1,4 @@
-# Implementing formal systems in Idris2
+# Implementing formal systems in Idris
 Using dependent types as a metalanguage with Idris2.
 
 You can use a dependently typed language like Idris, Agda, Coq (gallina?), etc. as a metalangue for reasoning about 

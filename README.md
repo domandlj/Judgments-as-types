@@ -5,7 +5,7 @@ You can use a dependently typed language like Idris, Agda, Coq (gallina?), etc. 
 formal systems (propositional logic, FOL, hoare logic, simply typed lambda calculus, etc.).  
 This idea is the core of the Edinburgh Logical Framework (ELF).
 
-## Curry-Howard 2.0
+## Curry-Howard 
 | **Formal system**         | **Type theory** | **Marketing name**       |
 |---------------------------|-----------------|--------------------------|
 | theorem (formula)         | type            | _propositions-as-types_  |
@@ -32,12 +32,12 @@ data Formula : Type where
 
 ### Set of proofs 
 
-We define that the set of proofs of a formula   $T(\phi) =$  { proof  | proof of $\phi$ } is inductively defined by judgments. 
+We define that the set of proofs of a formula   $T(\phi) =$  { proof  | proof of $\phi$ } is inductively constructed by judgments. 
 
-In idris:
+In idris we can define it with the following dependent type:
 ```idris
 data T : Formula -> Type where
- -- The constructors of this inductive dependent type are the judgments of natural deduction  
+ -- The constructors of this type are the judgments of natural deduction  
 ```
 Note that $t$ is a proof of $\phi$ if $t \in T(\phi)$ or, using Curry-Howard and Idris notation, if t : T ϕ
 
@@ -51,7 +51,7 @@ $\phi$
 
 ------------
 
-  [ $\phi$ ]                          
+   $[\phi]$                          
     ⋮  
   $\psi$                            
   ───    ( $ImpI$ )  
@@ -159,9 +159,79 @@ proof3 (a, b) = b
 
 
 ```
-The types here corresponds to formulas of an intuisionistic higer order logic. 
+The types here corresponds to formulas of an intuitionistic higer order logic. 
 
 # First order logic
+In propositional logic there are no variable binders, but in formal systems suchs as FOL or lambda calculus we have binders.  
+With binders and substitution we have the problem of capture, we have to think about fresh variables, etc. when writing in paper is 
+not as much of a problem but when we want to mechanize it with a computer we are challenged.  
+One common solution, in lambda calculus, is to forget of named variables and use de Bruijn indexes or levels. 
+
+The solutions that we will use here is really fast to implement and is easier, we will exploit the fact that the metalanguage (idris or the type theory behind it) has binders, and we will use it in the following way.
+
+Suppose in a formula $\phi$ of the object language (FOL in this case) we want to substitute the variable $v$ for the expression $e$, i.e., $\phi [v := e ]$, we can define it in the following abstraction in the metalanguage $(\psi \ e)$ where $\psi = (\lambda v . \phi \ v)$, we let the $\beta$-reduction take care of the substitution.  
+
+### Syntax
+$e \ ::= t \ | \ \neg e \ | \  e \Rightarrow e \ | \ e \wedge e \ | \ \forall v . e \ | \ \exists v . e  | \ \epsilon v . e$  
+$t \ ::= v \ | \  t = t \$  
+$v \ ::= x, y, z, ...$
+
+We are using a not so common presentation of FOL with $\epsilon$ the Hilbert Choice operator, we can think of this operator in this way:
+if $(\exists x . \phi)$ holds then the we can find a witness $w = \epsilon (\exists x . \phi)$ such that $\phi(w)$ holds.  
+This binder is at the terms levels of syntax, $\forall, \exists$ at the formula levels.  
+
+This abstract syntax is represented a in Idris as follows,
+
+At the level of variables, we let them range over an index, like $v \in Index$
+```idris
+Index : Type
+```
+For all formulas, except choice:  
+
+```idris
+data Formula : Type where
+  -- Propositional connectives
+  Neg : Formula -> Formula
+  Imp : Formula -> Formula -> Formula
+  And : Formula -> Formula -> Formula
+  
+  Equal : Index -> Index -> Formula
+  
+  -- The first order binders
+  Forall : (Index -> Formula) -> Formula
+  Exists : (Index -> Formula) -> Formula
+```
+
+
+As for $\epsilon$ we have it this way, outside the `Formula` type,  
+```idris
+Choice : (Index -> Formula) -> Index
+```
+Examples  
+$(\forall x . x = x)$, $(\exists x . x = x)$ and  $\epsilon (x=x)$
+
+Are
+```Idris
+Forall (\x => x `Equal` x) : Formula
+Exists (\x => x `Equal` x) : Formula
+Choice (\x => x `Equal` x) : Index
+```
+In this way we do not have to worry about $\alpha$-conversions because the metalanguage takes it care already. For instance,
+```idris
+Forall (\x => x `Equal` x)
+Forall (\z => z `Equal` z)
+Forall (\🍉 => 🍉 `Equal` 🍉)
+```
+Are all $\alpha$ equivalent.
+
+### Set of proofs 
+Again we define the set of proofs of a formula $T(\phi)$ as the following dependent type 
+```idris
+data T : Formula -> Type where
+ -- The constructors of this type are all of the propositional logic case and the following new ones
+```
+
+### Proofs examples
 
 # Cheat sheet
 This is in spanish, so if you can't read it just learn spanish 👍  

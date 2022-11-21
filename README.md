@@ -310,6 +310,46 @@ data T : Formula -> Type where
 ```
 
 ### Proofs examples
+Let's prove some theorems  
+$(\forall x . x = x)$  
+
+```idris
+proof1 : T (Forall (\x : Index => x `Equal` x))
+proof1 = ForallI (Equal0 {x})
+  where x : Index
+```
+
+$(\forall x . \phi  \Rightarrow \exists x . \phi )$  
+
+First we prove the lemma $(\forall x . \phi  \vdash \exists x . \phi )$
+```idris
+lemma : {ϕ : Index -> Formula} -> T (Forall ϕ) -> T (Exists ϕ)
+lemma p = ExistsI $ ForallE {ϕ} {t} p
+  where
+    t : Index
+    t = Choice ϕ
+
+
+proof2 : {ϕ : Index -> Formula} -> T ((Forall ϕ) `Imp` (Exists ϕ))
+proof2 = ImpI lemma
+```
+
+Once again, this would be the proofs using just Curry-Howard.
+```idris
+
+-- ∀ x . x = x 
+proof1 : (x: Type) -> x = x
+proof1 x = Refl
+
+--  ∀x.Φ ⇒ ∃x.Φ
+proof2 : {x : Type} -> {P : Type -> Type} -> ( (x) -> P x ) -> (x ** P x)
+proof2 f = (x ** (f y))
+  where y : x
+```
+
+
+
+
 
 ### Code
 See the repo files `pl.idr` and `fol.idr`, they typecheck. 

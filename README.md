@@ -102,6 +102,43 @@ $\phi$
   AndE2 : T (ϕ `And` Ψ) -> T Ψ
 ```
 
+### Proofs examples
+Lets prove $(P \Rightarrow P)$, $(P \wedge Q \Rightarrow P)$ and $(P \wedge Q \Rightarrow Q)$
+```idris
+
+P, Q, R : Formula
+
+proof1 : T (P `Imp` P)
+proof1 = ImpI Ident
+
+
+proof2 : T ((P `And` Q) `Imp` P)
+proof2 = ImpI AndE1
+
+
+proof3 : T ((P `And` Q) `Imp` Q)
+proof3 = ImpI AndE2
+```
+For better understanding draw the natural deduction proof tree, the judgments names that are used are  
+what you see in the terms (proofs) `proof1`, `proof2` and `proof3`. 
+&nbsp;
+
+Notice something, we are proving using dependant type theory as a metalanguage (propositional logic is the object language).  
+It's not the same as proving using directly Curry-Howard. This would be the proofs using just Curry-Howard, notice the difference.
+
+```idris
+proof1 : { P : Type } -> P -> P
+proof1 p = p
+
+proof2 : { P , Q : Type } -> (P, Q) -> P
+proof2 (a, b) = a
+
+proof3 : { P, Q : Type } -> (P, Q) -> Q
+proof3 (a, b) = b
+
+
+```
+
 # First order logic
 
 # Cheat sheet

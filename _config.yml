@@ -1,5 +1,6 @@
 lsi: false
 safe: true
+use_math: true
 source: ./
 incremental: false
 highlighter: rouge

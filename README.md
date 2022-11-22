@@ -230,7 +230,7 @@ As for $\epsilon$ we have it this way, outside the `Formula` type,
 Choice : (Index -> Formula) -> Index
 ```
 Examples  
-$(\forall x . x = x)$, $(\exists x . x = x)$ and  $\epsilon (x=x)$
+$(\forall x . x = x)$, $(\exists x . x = x)$ and  $(\epsilon x. x=x)$
 
 Are
 ```Idris
